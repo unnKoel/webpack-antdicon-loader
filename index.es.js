@@ -15,12 +15,12 @@ export default function () {
   const chunkName = options.chunkName || 'antd-icons';
   
   return `
-        import {WrapAntIcon} from 'webpack-antdicon-plugin/runtime.js';
+        import WrapAntIcon from 'webpack-antdicon-plugin/runtime.js';
 
         // create script tag will block main thread, resolve it by creating new task.
         const dynamicLoadAntIcons = () => {
           import (
-            /* webpackChunkName: "${chunkName}" */ '@ant-design/icons/lib/dist'
+            /* webpackChunkName: "${chunkName}" */ '!!./dist.js'
           ).then (allIcons => {
             WrapAntIcon.loadAll (allIcons);
           });

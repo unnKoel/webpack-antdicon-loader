@@ -1,19 +1,21 @@
 import AntIcon from '@ant-design/icons-react';
 import React, {PureComponent} from 'react';
 
-const originalGet = AntIcon.get;
+const originalGet = AntIcon.get.bind (AntIcon);
 AntIcon.get = (key, colors) => {
   const target = originalGet (key, colors);
   return (
     target || {
-      icon: props => (
-        <WrapAntIcon
-          type={key}
-          primaryColor={colors.primaryColor}
-          secondaryColor={colors.secondaryColor}
-          {...props}
-        />
-      ),
+      icon: {
+        tag: props => (
+          <WrapAntIcon
+            type={key}
+            primaryColor={colors.primaryColor}
+            secondaryColor={colors.secondaryColor}
+            {...props}
+          />
+        ),
+      },
     }
   );
 };
@@ -21,10 +23,10 @@ AntIcon.get = (key, colors) => {
 /**
  * AntIcon wrap Component
  */
-class WrapAntIcon extends PureComponent {
+export default class WrapAntIcon extends PureComponent {
   static allIconInstances = [];
   static loadAll (icons) {
-    AntIcon.add (icons);
+    AntIcon.add (...Object.keys(icons).map((key) => icons[key]));
     AntIcon.get = originalGet;
     this.allIconInstances.map (instance => instance.forceUpdate ());
     this.allIconInstances = [];
@@ -44,11 +46,9 @@ class WrapAntIcon extends PureComponent {
     // judage target exsit, is not, show a empty svg.
     const target = originalGet (type, {primaryColor, secondaryColor});
     if (target) {
-      <AntIcon {...this.props} />;
+      return <AntIcon {...this.props} />;
     } else {
       return <svg {...props} />;
     }
   }
 }
-
-export {WrapAntIcon};

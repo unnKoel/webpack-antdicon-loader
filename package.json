@@ -8,6 +8,10 @@
   "dependencies": {
     "loader-utils": "^1.2.3"
   },
+  "scripts": {
+    "build":"babel runtime.es.js --out-file runtime.js --presets @babel/preset-env,@babel/preset-react --plugins @babel/plugin-proposal-class-properties --source-maps",
+    "build:index":"babel index.es.js --out-file index.js --presets @babel/preset-env,@babel/preset-react --plugins @babel/plugin-proposal-class-properties --source-maps"
+  },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",

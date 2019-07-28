@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.WrapAntIcon = void 0;
+exports["default"] = void 0;
 
 var _iconsReact = _interopRequireDefault(require("@ant-design/icons-react"));
 
@@ -14,6 +14,14 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
@@ -39,17 +47,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-var originalGet = _iconsReact["default"].get;
+var originalGet = _iconsReact["default"].get.bind(_iconsReact["default"]);
 
 _iconsReact["default"].get = function (key, colors) {
   var target = originalGet(key, colors);
   return target || {
-    icon: function icon(props) {
-      return _react["default"].createElement(WrapAntIcon, _extends({
-        type: key,
-        primaryColor: colors.primaryColor,
-        secondaryColor: colors.secondaryColor
-      }, props));
+    icon: {
+      tag: function tag(props) {
+        return _react["default"].createElement(WrapAntIcon, _extends({
+          type: key,
+          primaryColor: colors.primaryColor,
+          secondaryColor: colors.secondaryColor
+        }, props));
+      }
     }
   };
 };
@@ -96,7 +106,7 @@ function (_PureComponent) {
       });
 
       if (target) {
-        _react["default"].createElement(_iconsReact["default"], this.props);
+        return _react["default"].createElement(_iconsReact["default"], this.props);
       } else {
         return _react["default"].createElement("svg", props);
       }
@@ -104,7 +114,9 @@ function (_PureComponent) {
   }], [{
     key: "loadAll",
     value: function loadAll(icons) {
-      _iconsReact["default"].add(icons);
+      _iconsReact["default"].add.apply(_iconsReact["default"], _toConsumableArray(Object.keys(icons).map(function (key) {
+        return icons[key];
+      })));
 
       _iconsReact["default"].get = originalGet;
       this.allIconInstances.map(function (instance) {
@@ -117,6 +129,8 @@ function (_PureComponent) {
   return WrapAntIcon;
 }(_react.PureComponent);
 
-exports.WrapAntIcon = WrapAntIcon;
+exports["default"] = WrapAntIcon;
 
 _defineProperty(WrapAntIcon, "allIconInstances", []);
+
+//# sourceMappingURL=runtime.js.map
